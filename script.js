@@ -27,14 +27,14 @@ dvdImage.addEventListener("load", () => {
 // Create DVD logo object
 class DvdLogo {
   constructor() {
-    this.x = Math.random() * (canvas.width - 100);
-    this.y = Math.random() * (canvas.height - 30);
+    this.x = Math.random() * (canvas.width - this.width);
+    this.y = Math.random() * (canvas.height - this.height);
     this.vx = 0.25;
     this.vy = 0.25;
     this.color = this.randomColor();
     this.width = 100;
     this.height = 30;
-  }
+}
 
   randomColor() {
     const colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"];
