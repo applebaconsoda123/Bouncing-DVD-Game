@@ -1,4 +1,4 @@
- import pygame
+import pygame
 import random
 import numpy as np
 
@@ -49,12 +49,8 @@ for _ in range(50000):
 # Normalize hit map
 hit_map = hit_map / np.max(hit_map)
 
-# Draw hit map
-for x in range(screen_width):
-    for y in range(screen_height):
-        intensity = hit_map[x][y]
-        color = (255, int(255 * (1 - intensity)), 0)
-        screen.set_at((x, y), color)
+# Font for displaying tooltip text
+font = pygame.font.SysFont('Arial', 14)
 
 # Main loop
 running = True
@@ -63,6 +59,22 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    # Draw hit map
+    for x in range(screen_width):
+        for y in range(screen_height):
+            intensity = hit_map[x][y]
+            color = (255, int(255 * (1 - intensity)), 0)
+            screen.set_at((x, y), color)
+
+    # Show tooltip on mouse hover
+    mouse_pos = pygame.mouse.get_pos()
+    if mouse_pos[0] >= 0 and mouse_pos[0] < screen_width and mouse_pos[1] >= 0 and mouse_pos[1] < screen_height:
+        tooltip_text = '{:.2%} chance of DVD logo'.format(hit_map[mouse_pos[0]][mouse_pos[1]])
+        tooltip = font.render(tooltip_text, True, (255, 255, 255), (0, 0, 0))
+        tooltip_rect = tooltip.get_rect()
+        tooltip_rect.center = mouse_pos[0] + 10, mouse_pos[1] + 10
+        screen.blit(tooltip, tooltip_rect)
 
     # Update the display
     pygame.display.flip()
